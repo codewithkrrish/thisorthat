@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThisOrThat — Would You Rather? Pick a Side</title>
+  <meta name="description" content="ThisOrThat is a would-you-rather deck game: 72 fun questions across six categories, tap to choose, see the playful vote split, and build your streak. Free, in your browser, nothing uploaded.">
+  <link rel="canonical" href="https://thisorthat.vercel.app/">
+  <meta name="theme-color" content="#0B0B0F">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ThisOrThat — Would You Rather? Pick a Side">
+  <meta property="og:description" content="72 would-you-rather questions across six categories. Tap to choose, see the fun vote split, build your streak. Just for fun, free in your browser.">
+  <meta property="og:url" content="https://thisorthat.vercel.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ThisOrThat — Would You Rather? Pick a Side">
+  <meta name="twitter:description" content="72 would-you-rather questions across six categories. Tap to choose, see the fun vote split, build your streak. Just for fun, free in your browser.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>ThisOrThat</h1>
+      <p class="tagline">Would you rather…? Pick a side, see the fun vote split, and keep your streak alive. 72 questions, six categories, zero wrong answers.</p>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <section class="panel deck-panel" aria-label="Would you rather deck">
+      <div class="deck-head">
+        <h2>Pick a side</h2>
+        <p class="streak-line" id="streak-line">Streak: 0 &middot; Best: 0</p>
+      </div>
+
+      <div class="category-row" id="category-row" role="group" aria-label="Question category">
+        <button type="button" class="btn category-btn active" data-category="all">All <span class="count">72</span></button>
+        <button type="button" class="btn category-btn" data-category="funny">Funny <span class="count">12</span></button>
+        <button type="button" class="btn category-btn" data-category="food">Food <span class="count">12</span></button>
+        <button type="button" class="btn category-btn" data-category="travel">Travel <span class="count">12</span></button>
+        <button type="button" class="btn category-btn" data-category="tech">Tech <span class="count">12</span></button>
+        <button type="button" class="btn category-btn" data-category="life">Life <span class="count">12</span></button>
+        <button type="button" class="btn category-btn" data-category="deep">Deep <span class="count">12</span></button>
+      </div>
+      <p class="category-blurb" id="category-blurb">Every category, shuffled into one deck.</p>
+
+      <div class="deck-body" id="deck-body">
+        <p class="progress" id="progress-line">Question 1 of 72</p>
+        <p class="question-label" id="question-label">Would you rather&hellip;</p>
+        <p class="question-category" id="question-category"></p>
+
+        <div class="options" id="options">
+          <button type="button" class="option-btn" id="option-a" data-side="a">
+            <span class="option-key">1</span>
+            <span class="option-text" id="option-a-text"></span>
+            <span class="option-pick" id="option-a-pick" hidden>Your pick</span>
+            <span class="option-vote" id="option-a-vote" hidden>
+              <span class="vote-track"><span class="vote-fill" id="option-a-fill" data-value="0"></span></span>
+              <span class="vote-number" id="option-a-number"></span>
+            </span>
+          </button>
+          <span class="options-or" aria-hidden="true">or</span>
+          <button type="button" class="option-btn" id="option-b" data-side="b">
+            <span class="option-key">2</span>
+            <span class="option-text" id="option-b-text"></span>
+            <span class="option-pick" id="option-b-pick" hidden>Your pick</span>
+            <span class="option-vote" id="option-b-vote" hidden>
+              <span class="vote-track"><span class="vote-fill" id="option-b-fill" data-value="0"></span></span>
+              <span class="vote-number" id="option-b-number"></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="deck-actions">
+          <button type="button" class="btn btn-primary btn-next" id="next-btn" disabled>Next question</button>
+          <button type="button" class="btn" id="skip-btn">Skip</button>
+          <button type="button" class="btn" id="surprise-btn">Surprise me</button>
+        </div>
+        <p class="hint">Pick an option to see the vote split and grow your streak. Skipping resets the streak to zero. Keyboard: 1 or 2 to pick, N for next, S to skip.</p>
+        <p class="status-message" id="card-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="deck-finished" id="deck-finished" hidden>
+        <p class="finished-title">Deck finished</p>
+        <p class="finished-text" id="finished-text"></p>
+        <div class="deck-actions">
+          <button type="button" class="btn btn-primary" id="reshuffle-btn">Shuffle and play again</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel share-panel" aria-label="Share your pick" id="share-section" hidden>
+      <h2>Share this pick</h2>
+      <p class="share-text" id="share-text"></p>
+      <div class="card-actions">
+        <button type="button" class="btn btn-primary" id="download-card-btn">Download result card (PNG)</button>
+        <button type="button" class="btn" id="copy-result-btn">Copy result text</button>
+      </div>
+    </section>
+
+    <section class="panel history-panel" aria-label="Recent picks" id="history-section" hidden>
+      <div class="history-head">
+        <h2>Recent picks</h2>
+        <button type="button" class="btn btn-small btn-ghost" id="clear-history-btn">Clear history</button>
+      </div>
+      <ul class="history-list" id="history-list"></ul>
+      <p class="hint">Tap a pick to see that question again. Your last 8 picks are kept in this browser only.</p>
+    </section>
+
+    <section class="panel about" aria-label="About this tool">
+      <h2>How it works</h2>
+      <p>ThisOrThat deals you a shuffled deck of would-you-rather questions from six categories — Funny, Food, Travel, Tech, Life and Deep. Tap the option you would choose and the fun vote split appears for both sides, with your pick highlighted. Every pick in a row grows your streak; skipping a question resets it to zero. Your best streak is saved in this browser.</p>
+      <p>The percentages are playful, not a real poll. Each question's split is generated from a stable hash of the question itself, so the same question always shows the same numbers — there is no database of real votes behind them, and no answer here says anything about you. Use it for laughs, ice-breakers and friendly arguments.</p>
+      <p>Everything runs in your browser. Your picks, your streak and your history are stored in this browser's local storage and never leave your device. Clearing your browser data clears them too.</p>
+      <p>Keyboard: press 1 or the left arrow to pick the first option, 2 or the right arrow for the second, N or Enter for the next question once you have picked, and S to skip.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Built by <a href="https://github.com/codewithkrrish/thisorthat">krrish</a> &middot; <a href="https://www.instagram.com/krrishx.ai">Instagram</a></p>
+      <p class="privacy">Everything runs in your browser — your choices never leave your device.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
