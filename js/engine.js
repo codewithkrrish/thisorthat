@@ -14,7 +14,7 @@ export const HISTORY_KEY = "thisorthat:history:v1";
 export const BEST_KEY = "thisorthat:best:v1";
 export const CATEGORY_KEY = "thisorthat:category:v1";
 
-export const SITE_URL = "https://thisorthat.vercel.app/";
+export const SITE_URL = "https://thisorthat-app.vercel.app/";
 
 /* --- Categories ---------------------------------------------------------- */
 
@@ -337,7 +337,7 @@ export function drawResultCard(ctx, pick) {
   ctx.fillText("Would you rather… play again?", W / 2, 1200);
   ctx.fillStyle = "#F5F5F7";
   ctx.font = "700 34px Inter, sans-serif";
-  ctx.fillText("thisorthat.vercel.app", W / 2, 1252);
+  ctx.fillText("thisorthat-app.vercel.app", W / 2, 1252);
   ctx.fillStyle = "#9A9AA5";
   ctx.font = "400 26px Inter, sans-serif";
   ctx.fillText(data.disclaimer, W / 2, 1298);

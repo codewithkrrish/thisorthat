@@ -5,7 +5,7 @@ you would choose, and ThisOrThat shows you the fun vote split and keeps
 your streak going. It is a bit of fun for ice-breakers, group chats and
 friendly arguments — nothing more than that.
 
-Live at https://thisorthat.vercel.app/
+Live at https://thisorthat-app.vercel.app/
 
 ## What it does
 
